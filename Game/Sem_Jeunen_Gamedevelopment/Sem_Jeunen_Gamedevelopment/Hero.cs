@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sem_Jeunen_Gamedevelopment.Animations;
+using System.Drawing.Text;
+using SharpDX.MediaFoundation;
 
 namespace Sem_Jeunen_Gamedevelopment
 {
@@ -14,26 +16,28 @@ namespace Sem_Jeunen_Gamedevelopment
     {
         private Texture2D heroTexture;
         Animation animatie;
-        private int aantalFrames = 24;
 
         public Hero(Texture2D texture)
         {
             heroTexture = texture;
             animatie = new Animation();
-            for (int i = 0; i <= 112 * aantalFrames; i += 112)
-            {
-                animatie.AddFrame(new AnimationFrame(new Rectangle(i, 0, 112, 133)));
-            }
+            animatie.GetFramesFromTextureProperties(heroTexture.Width, heroTexture.Height, 12, 11);
         }
 
         public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(heroTexture, new Vector2(0, 0), animatie.currentFrame.SourceRectangle, Color.White);
+
+            Vector2 positie;
+
+            positie = new Vector2(0,0);
+
+            _spriteBatch.Draw(heroTexture, positie, animatie.currentFrame.SourceRectangle, Color.White);
         }
 
-        public void Update()
+        public void Update(GameTime gametime)
         {
-            animatie.Update();
+            animatie.Update(gametime);
         }
     }
 }

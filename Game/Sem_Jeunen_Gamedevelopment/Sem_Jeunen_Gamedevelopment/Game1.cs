@@ -41,6 +41,7 @@ namespace Sem_Jeunen_Gamedevelopment
             hero = new Hero(_texture);
         }
 
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -48,7 +49,7 @@ namespace Sem_Jeunen_Gamedevelopment
 
             // TODO: Add your update logic here
 
-            hero.Update();
+            hero.Update(gameTime);
 
             base.Update(gameTime);
         }
