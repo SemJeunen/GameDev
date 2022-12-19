@@ -1,14 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using SharpDX.Direct3D9;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sem_Jeunen_Gamedevelopment.Animations;
-using System.Drawing.Text;
-using SharpDX.MediaFoundation;
 
 namespace Sem_Jeunen_Gamedevelopment
 {
@@ -16,28 +8,41 @@ namespace Sem_Jeunen_Gamedevelopment
     {
         private Texture2D heroTexture;
         Animation animatie;
+        Vector2 positie;
+        Vector2 snelheid;
 
         public Hero(Texture2D texture)
         {
             heroTexture = texture;
             animatie = new Animation();
             animatie.GetFramesFromTextureProperties(heroTexture.Width, heroTexture.Height, 12, 11);
+            snelheid = new Vector2(1, 1);
+            positie = new Vector2(0, 0);
         }
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(heroTexture, new Vector2(0, 0), animatie.currentFrame.SourceRectangle, Color.White);
-
-            Vector2 positie;
-
-            positie = new Vector2(0,0);
-
             _spriteBatch.Draw(heroTexture, positie, animatie.currentFrame.SourceRectangle, Color.White);
         }
 
         public void Update(GameTime gametime)
         {
             animatie.Update(gametime);
+            Move();
+        }
+
+        private void Move()
+        {
+            positie += snelheid;
+            if (positie.X >  GraphicsDeviceManager.DefaultBackBufferWidth - (heroTexture.Width / 12) || positie.X < 0)
+            {
+                snelheid.X *= -1;
+            }
+            if (positie.Y > GraphicsDeviceManager.DefaultBackBufferHeight - (heroTexture.Height / 11) || positie.Y < 0)
+            {
+                snelheid.Y *= -1;
+            }
+
         }
     }
 }
