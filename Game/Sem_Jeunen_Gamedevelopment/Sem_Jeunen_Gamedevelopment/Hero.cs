@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Sem_Jeunen_Gamedevelopment.Animations;
+using Microsoft.Xna.Framework.Input;
 
 namespace Sem_Jeunen_Gamedevelopment
 {
@@ -10,13 +11,14 @@ namespace Sem_Jeunen_Gamedevelopment
         Animation animatie;
         Vector2 positie;
         Vector2 snelheid;
+        Vector2 direction;
 
         public Hero(Texture2D texture)
         {
             heroTexture = texture;
             animatie = new Animation();
             animatie.GetFramesFromTextureProperties(heroTexture.Width, heroTexture.Height, 12, 11);
-            snelheid = new Vector2(1, 1);
+            snelheid = new Vector2(2, 1);
             positie = new Vector2(0, 0);
         }
 
@@ -27,13 +29,24 @@ namespace Sem_Jeunen_Gamedevelopment
 
         public void Update(GameTime gametime)
         {
+            direction = Vector2.Zero;
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.Left))
+            {
+                direction.X -= 1;
+            }
+            if (state.IsKeyDown(Keys.Right))
+            {
+                direction.X += 1;
+            }
             animatie.Update(gametime);
             Move();
         }
 
         private void Move()
         {
-            positie += snelheid;
+            direction *= snelheid;
+            positie += direction;
             if (positie.X >  GraphicsDeviceManager.DefaultBackBufferWidth - (heroTexture.Width / 12) || positie.X < 0)
             {
                 snelheid.X *= -1;
