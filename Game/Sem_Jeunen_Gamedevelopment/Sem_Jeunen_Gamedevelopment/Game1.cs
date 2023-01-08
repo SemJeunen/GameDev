@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Sem_Jeunen_Gamedevelopment.Input;
 using System;
 
 namespace Sem_Jeunen_Gamedevelopment
@@ -38,7 +39,7 @@ namespace Sem_Jeunen_Gamedevelopment
 
         private void InitializeGameObject()
         {
-            hero = new Hero(_texture);
+            hero = new Hero(_texture, new KeyboardReader());
         }
 
 
